@@ -1,5 +1,7 @@
 # Aliens Box - HackRocks CTF
 
+> ⚠️ Work in progress
+
 ## Descripción
 Se nos proporciona una imagen aparentemente normal. 
 El reto consiste en encontrar un mensaje oculto dentro de ella.
