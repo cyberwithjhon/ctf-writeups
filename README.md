@@ -47,6 +47,7 @@ which analyzes the least significant bits of each pixel:
 ```bash
 zsteg -a intercepted_transmission.png
 ```
+<img width="2657" height="1245" alt="IMG_7141" src="https://github.com/user-attachments/assets/a2bfb69d-179a-4e25-bd63-014ba62c922e" />
 
 **Result:** The flag was hidden in the LSB bits of the RGB channels.
 
