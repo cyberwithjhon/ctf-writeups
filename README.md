@@ -4,6 +4,8 @@
 We are given an image that looks completely normal at first glance.
 The challenge is to find a hidden message inside it.
 
+<img width="769" height="404" alt="kali-linux  Corriendo  - Oracle VirtualBox 22_05_2026 16_59_26" src="https://github.com/user-attachments/assets/c8c1149a-d197-4c1a-9fb9-aba8dc12be67" />
+
 **Category:** Steganography  
 **Platform:** HackRocks  
 **Difficulty:** Easy 
@@ -26,6 +28,7 @@ First thing I always do is check the metadata:
 ```bash
 exiftool intercepted_transmission.png
 ```
+<img width="1920" height="974" alt="kali-linux  Corriendo  - Oracle VirtualBox 22_05_2026 16_59_26" src="https://github.com/user-attachments/assets/6a390bce-1106-4d42-a7eb-cde727f5bedb" />
 
 **Result:** Nothing relevant found in the metadata.
 
