@@ -1,83 +1,81 @@
 # Aliens Box - HackRocks CTF
 
-> ⚠️ Work in progress
+## Description
+We are given an image that looks completely normal at first glance.
+The challenge is to find a hidden message inside it.
 
-## Descripción
-Se nos proporciona una imagen aparentemente normal. 
-El reto consiste en encontrar un mensaje oculto dentro de ella.
-
-**Categoría:** Esteganografía  
-**Plataforma:** HackRocks  
-**Dificultad:** Easy 
-**Flag:** ``
+**Category:** Steganography  
+**Platform:** HackRocks  
+**Difficulty:** Easy 
+**Flag:** `FLAG{NourAlpha8_Invasi0n_Pl4ns_2023}`
 
 ---
 
-## Herramientas utilizadas
-- `exiftool` → análisis de metadatos
-- `binwalk` → detección de archivos ocultos
-- `zsteg` → detección de esteganografía en PNG
+## Tools used
+- `exiftool` → metadata analysis
+- `binwalk` → hidden file detection
+- `zsteg` → LSB steganography detection for PNG files
 
 ---
 
-## Proceso
+## Process
 
-### Paso 1 - Análisis de metadatos
-Lo primero siempre es analizar los metadatos de la imagen:
+### Step 1 - Metadata analysis
+First thing I always do is check the metadata:
 
 ```bash
 exiftool intercepted_transmission.png
 ```
 
-**Resultado:** No se encontró nada relevante en los metadatos.
+**Result:** Nothing relevant found in the metadata.
 
-### Paso 2 - Búsqueda de archivos ocultos
+### Step 2 - Hidden file detection
 ```bash
 binwalk intercepted_transmission.png
 ```
 
-**Resultado:** Solo se detectó la estructura normal del PNG. Nada oculto.
+**Result:** Only the normal PNG structure was detected. Nothing hidden.
 
-
-### Paso 3 - Esteganografía LSB
-Al no encontrar nada con los métodos anteriores, probé con zsteg 
-que analiza los bits menos significativos de los píxeles:
+### Step 3 - LSB Steganography
+Since nothing was found with the previous methods, I tried zsteg,
+which analyzes the least significant bits of each pixel:
 
 ```bash
 zsteg -a intercepted_transmission.png
 ```
 
-**Resultado:** La flag apareció oculta en los bits LSB del canal RGB.
+**Result:** The flag was hidden in the LSB bits of the RGB channels.
 
 ---
 
-## Explicación técnica
+## Technical explanation
 
-La técnica utilizada se llama **LSB (Least Significant Bit)**.
+The technique used is called **LSB (Least Significant Bit)**.
 
-Cada píxel de una imagen PNG contiene colores en formato RGB. 
-Cada canal de color se representa con 8 bits. 
-El último bit (el menos significativo) apenas afecta 
-al color visualmente.
+Every pixel in a PNG image contains colors in RGB format.
+Each color channel is represented with 8 bits.
+The last bit (the least significant one) barely affects
+the color visually.
 
-La diferencia es imperceptible para el ojo humano, pero 
-concatenando todos esos bits ocultos se puede reconstruir 
-un mensaje completo.
-
----
-
-## Lección aprendida
-
-Cuando una imagen no revela nada en metadatos ni en análisis 
-superficial, la esteganografía LSB es el siguiente paso.
-
-La metodología correcta para retos de este tipo es:
-1. Metadatos → `exiftool`
-2. Archivos ocultos → `binwalk`
-3. Esteganografía → `zsteg`, `steghide`
+The difference is imperceptible to the human eye, but by
+concatenating all those hidden bits, a complete message
+can be reconstructed.
 
 ---
 
-## Referencias
+## Lessons learned
+
+When an image reveals nothing in metadata or surface analysis,
+LSB steganography is the next step.
+
+The correct methodology for this type of challenge:
+1. Metadata → `exitfool`
+2. Hidden files → `binwalk`
+3. Steganography → `zsteg`, `steghide`
+
+---
+
+## References
 - [zsteg GitHub](https://github.com/zed-0xff/zsteg)
 - [Steganography - Wikipedia](https://en.wikipedia.org/wiki/Steganography)
+- [HackRocks](https://hackrocks.com)
