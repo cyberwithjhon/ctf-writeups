@@ -15,4 +15,4 @@ Collection of writeups from CTF competitions and cybersecurity platforms.
 ## HackRocks
 | Lab | Category | Difficulty |
 |-----------|----------|----------|
-| [Aliens Box](ctf-competitions/hackrocks/aliens-box/) | Steganography | Easy
+| [Aliens Box](https://github.com/cyberwithjhon/ctf-writeups/tree/main/hackrocks/aliens-box) | Steganography | Easy
