@@ -111,7 +111,7 @@ A key lesson from this step is that a legitimate provider can be abused to host 
 
 In this case, `storage.googleapis.com` is legitimate Google infrastructure, but that does not automatically make a specific resource hosted there trustworthy.
 
-![Uploading image.png…]()
+<img width="1920" height="826" alt="image" src="https://github.com/user-attachments/assets/edaccca5-6056-45d5-804b-ff2bb628f8d7" />
 
 
 The investigation therefore focused on the actual content and HTTP response associated with the domain/resource rather than treating the reputation of Google as proof of legitimacy.
@@ -140,7 +140,9 @@ The relevant value shown in the investigation was:
 13945ecc33afee74ac7f72e1d5bb73050894356c4bf63d02a1a53e76830567f5
 ```
 
-![Uploading image.png…]()
+<img width="1031" height="425" alt="image" src="https://github.com/user-attachments/assets/780e6305-0e85-497c-b614-f0779ac5a542" />
+
+
 
 
 ### Important distinction
@@ -173,7 +175,6 @@ The decision was supported by multiple indicators:
 - The URL/domain investigation provided additional suspicious context.
 - The message used a reward/urgency-based social-engineering lure.
 
-![Challenge result](screenshots/05_challenge_answers.png)
 
 ---
 
